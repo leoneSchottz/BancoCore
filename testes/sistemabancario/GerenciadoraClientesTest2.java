@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -17,7 +19,7 @@ import org.junit.Test;
  * @date 18/08/2023
  * 
  */
-public class GerenciadoraClientesTest1 {
+public class GerenciadoraClientesTest2 {
 	
 	/**
 	 * Teste basico da pesquisa de um cliente a partir do seu ID
@@ -25,20 +27,33 @@ public class GerenciadoraClientesTest1 {
 	 * @author Leone Schottz
 	 * @date 18/08/2023
 	 */
-	@Test
-	public void testPesquisaCliente() {
-		
-	/*=====Montagem do cenário de teste=====*/
-	//criando alguns clientes
-		Cliente cliente01 = new Cliente(1, "João da Silva", 20, "joaodasilva@gmail.com", 1, true);
-		Cliente cliente02 = new Cliente(2, "Maria da Silva", 18, "mariadasilva@gmail.com", 1, true);
+
+	private GerenciadoraClientes gerClientes;
+	private int idCliente1 = 1;
+	private int idCliente2 = 2;
+	
+
+	@Before
+	public void setUp(){
+		Cliente cliente01 = new Cliente(idCliente1, "João da Silva", 20, "joaodasilva@gmail.com", 1, true);
+		Cliente cliente02 = new Cliente(idCliente2, "Maria da Silva", 18, "mariadasilva@gmail.com", 1, true);
 		
 	//inserindo os clientes criados na lista de clientes do banco
 		List<Cliente> clientesDoBanco = new ArrayList<Cliente>();
 		clientesDoBanco.add(cliente01);
 		clientesDoBanco.add(cliente02);
 		
-		GerenciadoraClientes gerClientes = new GerenciadoraClientes(clientesDoBanco);
+		gerClientes = new GerenciadoraClientes(clientesDoBanco);
+	}
+
+	@After
+	public void tearDown(){
+		gerClientes.limpa();
+	}
+
+
+	@Test
+	public void testPesquisaCliente() {		
 		
 	/*=====Execução do Teste=====*/
 		Cliente cliente = gerClientes.pesquisaCliente(1);
@@ -54,19 +69,7 @@ public class GerenciadoraClientesTest1 {
 	 * 25/08/2023
 	 */
 	@Test
-	public void TestRemoveCliente(){
-		
-		/*============ Montagem do meu Cenário de teste ===========*/
-						Cliente cliente01 = new Cliente(1, "João da Silva", 20, "joaodasilva@gmail.com", 1, true);
-				Cliente cliente02 = new Cliente(2, "Maria da Silva", 18, "mariadasilva@gmail.com", 1, true);
-				
-				List<Cliente> clientesDoBanco = new ArrayList<Cliente>();
-				clientesDoBanco.add(cliente01);
-				clientesDoBanco.add(cliente02);
-				
-		/*============ preparação para execução ===========*/
-				GerenciadoraClientes gerClientes = new GerenciadoraClientes(clientesDoBanco);
-				
+	public void TestRemoveCliente(){				
 		/*============ Execução da regra de negócio a ser testada ===========*/	
 				boolean resultadoRemocaoCliente = gerClientes.removeCliente(2);
 				
@@ -75,6 +78,11 @@ public class GerenciadoraClientesTest1 {
 				assertThat(gerClientes.getClientesDoBanco().size(), is(1));
 				assertNull(gerClientes.pesquisaCliente(2));
 			}
+
+	@Test
+	public void testRemoveClienteFail(){
+		
+	}
 
 }
 
