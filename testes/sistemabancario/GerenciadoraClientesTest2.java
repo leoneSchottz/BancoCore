@@ -1,6 +1,7 @@
 package sistemabancario;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
@@ -81,7 +82,19 @@ public class GerenciadoraClientesTest2 {
 
 	@Test
 	public void testRemoveClienteFail(){
-		
+		boolean resultadoRemocaoCliente = gerClientes.removeCliente(10);
+
+		assertThat(resultadoRemocaoCliente, is(false));
+		assertFalse(resultadoRemocaoCliente);
+		assertThat(gerClientes.getClientesDoBanco().size(), is(2));
+	}
+
+	@Test
+	public void testPesquisaClienteFail(){
+		Cliente resultadoBuscaCliente = gerClientes.pesquisaCliente(10);
+
+		assertNull(resultadoBuscaCliente);
+
 	}
 
 }

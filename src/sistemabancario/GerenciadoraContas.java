@@ -108,5 +108,9 @@ public class GerenciadoraContas {
 	
 		return sucesso;
 	}
+
+	public void limpa() {
+		this.contasDoBanco.clear();
+	}
 	
 }
